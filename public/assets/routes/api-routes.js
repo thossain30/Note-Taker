@@ -14,13 +14,12 @@ notes.post("/notes", (req, res) => {
     let curnotes = JSON.parse(data);
     const {title, text} = req.body;
 
-    console.log("request: ", req.body);
+
     const newNote = {
         title,
         text,
         id:uuidv4()
     };
-    console.log("newnote: ", newNote);
     curnotes.push(newNote);
     // writing new note to db.json
     fs.writeFileSync(path.join(__dirname, '../../../db/db.json'), JSON.stringify(curnotes));
