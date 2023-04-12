@@ -1,16 +1,19 @@
 const notes = require("express").Router();
 const fs = require("fs");
 const path = require("path");
-
 const { v4: uuidv4 } = require('uuid');
 
 notes.get("api/notes", (req, res) => {
-    let data = fs.readFileSync(path.join(__dirname, '../../db/db.json'));
+    // data is reading from db.json
+    let data = fs.readFileSync(path.join(__dirname, '../../../db/db.json'));
     res.send(JSON.parse(data));
 })
+// db\db.json
+// public\assets\routes\api-routes.js
 
 notes.post("api/notes", (req, res) => {
-    let data = fs.readFileSync(path.join(__dirname, '../../db/db.json'));
+    let data = fs.readFileSync(path.join(__dirname, '../../../db/db.json'));
+    console.log(data);
     let curnotes = JSON.parse(data);
     const {title, text} = req.body;
     const newNote = {
@@ -19,7 +22,8 @@ notes.post("api/notes", (req, res) => {
         id:uuidv4()
     };
     curnotes.push(newNote);
-    fs.writeFileSync(path.join(__dirname, '../../db/db.json'));
+    // writing new note to db.json
+    fs.writeFileSync(path.join(__dirname, '../../../db/db.json'));
     res.send(newNote);
 });
 
