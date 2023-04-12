@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require('uuid');
 
-notes.get("api/notes", (req, res) => {
+notes.get("/notes", (req, res) => {
     // data is reading from db.json
     let data = fs.readFileSync(path.join(__dirname, '../../../db/db.json'));
     res.send(JSON.parse(data));
@@ -11,10 +11,10 @@ notes.get("api/notes", (req, res) => {
 // db\db.json
 // public\assets\routes\api-routes.js
 
-notes.post("api/notes", (req, res) => {
+notes.post("/notes", (req, res) => {
     let data = fs.readFileSync(path.join(__dirname, '../../../db/db.json'));
-    console.log(data);
     let curnotes = JSON.parse(data);
+    console.log(curnotes);
     const {title, text} = req.body;
     const newNote = {
         title,
@@ -25,6 +25,7 @@ notes.post("api/notes", (req, res) => {
     // writing new note to db.json
     fs.writeFileSync(path.join(__dirname, '../../../db/db.json'));
     res.send(newNote);
+    res.send('Note sent!');
 });
 
 module.exports = notes;
